@@ -1,6 +1,6 @@
 <?php
 
-include 'functions.php';
+
  $message = '';
 if (isset($_POST['create_post'])) {
 	# code...

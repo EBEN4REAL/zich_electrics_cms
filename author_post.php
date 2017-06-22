@@ -6,6 +6,7 @@
 
     <!-- Page Content -->
     <div class="container" >
+
         <div class="row">
 
             <!-- Blog Entries Column -->
@@ -16,12 +17,9 @@
             if (isset($_GET['post_id'])) {
                 # code...
                 $post_id = $_GET['post_id'];
+                $post_author = $_GET['author'];
 
-            $view_query = "UPDATE  posts SET post_view_count =  post_view_count + 1  WHERE post_id = '$post_id'";
-            $send_query = mysqli_query($connection , $view_query);
-
-            $query = "SELECT * FROM posts  WHERE post_id = '$post_id'";
-
+            $query = "SELECT * FROM posts WHERE post_author = '$post_author'";
             $sql_query = mysqli_query($connection , $query);
             while ($rows = mysqli_fetch_assoc( $sql_query)) {
                 $post_title = $rows['post_title'];
@@ -33,17 +31,18 @@
 
                 echo '
 
-                   <h1 class="page-header">
-                    
-                    <small></small>
-                </h1>
+                  
+                   <h3 class="page-header">
+                   
+                     <small></small>
+                </h3>
 
                 <!-- First Blog Post -->
                 <h2>
-                    <a href="#">'. $post_title.'</a>
+                   All Projects Facilitated by
                 </h2>
                 <p class="lead">
-                    by <a href="index.php">'.$post_author.'</a>
+                    '.$post_author.'
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on '.$post_date.'</p>
                 <hr>
@@ -66,8 +65,6 @@
 
             }
 
-            }else{
-                header("Location: index.php");
             }
 
 
@@ -119,33 +116,6 @@
 
 
             ?>
-
-                <!-- Comments Form -->
-                <div class="well">
-                    <h4>Leave a Comment:</h4>
-                    <form role="form" action="" method="post">
-
-
-                        <div class="form-group">
-                            <label>Author</label>
-                            <input type="text" name="comment_author" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                        <label>Email</label>
-                           <input type="email" name="comment_email" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                           <label>Your Comment</label>
-                            <textarea class="form-control" rows="3" name="comment_content"></textarea >
-                        </div>
-                        <div class="form-group">
-                          <button name="submit_comment" class="btn btn-primary">Submit</button>
-                        </div>
-                        
-                    </form>
-                </div>
 
                 <hr>
 

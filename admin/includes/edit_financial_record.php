@@ -1,16 +1,8 @@
 <?php
 
-//section that selects users from the DB
-$query = "SELECT 	* FROM users WHERE username = '$_SESSION[username]'";
-$run_query  = mysqli_query($connection  , $query);
-while ($row = mysqli_fetch_array($run_query)) {
-	# code...
-	$user_image = $row['user_image'];
-}
-
-
+include 'functions.php';
 $message = '';
-if (isset($_POST['create_user'])) {
+if (isset($_POST['edit_user'])) {
 	
 	# code...
 	
@@ -42,22 +34,15 @@ if (isset($_POST['create_user'])) {
 
   $user_password = crypt($user_password  , $salt);
     
-   if ($user_image) {
-   	# code...
-   	  $query  =  "INSERT INTO users (user_firstname, user_lastname , username,user_image, user_email, user_password,user_role) VALUES ('$user_firstname','$user_lastname','$username', '$user_image','$user_email','$user_password','$user_role')" ;
+
+     $query  =  "INSERT INTO users (user_firstname, user_lastname , username,user_image, user_email, user_password,user_role) VALUES ('$user_firstname','$user_lastname','$username', '$user_image','$user_email','$user_password','$user_role')" ;
     $run_query = mysqli_query($connection , $query);
-  
+
     check_query_success($run_query);
 
     $message =  "User Created : " . " " . "<a href='users.php' class='btn btn-primary'>View Users</a>";
 
 
-   }else{
-   	 $query  =  "UPDATE users SET user_image = '$user_image' WHERE username = '$username'" ;
-     $run_query = mysqli_query($connection , $query);
-   }
-
-   
 }
 
 

@@ -1,24 +1,6 @@
 -<?php include "../includes/db.php";  ?>
 
-<?php
-include "functions.php";
-  $edit = '';
- $status = '';
- //function that inset category into database
-insert_category();
- //section that updates categories in the  database
-               if (isset($_POST['update_category'])) {
-                   # code...
-                 $category = $_POST['category'];
-                 $update_category = "UPDATE categories SET cat_title = ' $category'   WHERE cat_id = '$cat_id'";
-                 $sql_query = mysqli_query($connection ,  $update_category);
-               }
-              
-            
-           
-          
- ?>
-
+<?php $status = '';  ?>
 
 
 
@@ -151,6 +133,41 @@ insert_category();
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function loadUsersOnline(){
+    $.get("functions.php?onlineusers=result" , function(data){
+      $(".usersOnline").text(data);
+    });
+
+}
+
+setInterval(function(){
+    loadUsersOnline()
+}, 500)
+
+loadUsersOnline();
+
+    </script>
+
+
+
+                <?php
+                
+                 //function that inset category into database
+                insert_category();
+                 //section that updates categories in the  database
+               if (isset($_POST['update_category'])) {
+                   # code...
+                 $category = $_POST['category'];
+                 $update_category = "UPDATE categories SET cat_title = ' $category'   WHERE cat_id = '$cat_id'";
+                 $sql_query = mysqli_query($connection ,  $update_category);
+               }
+            
+             ?>
+            
+           
+          
+
 
 </body>
 

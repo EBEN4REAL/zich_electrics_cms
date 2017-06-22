@@ -1,4 +1,5 @@
--<?php include "../includes/db.php";  ?>
+<?php include "../includes/db.php";  ?>
+
 
 
 
@@ -40,8 +41,9 @@
 
     <div id="wrapper">
 
-        <!-- Navigation -->
-        <?php include "includes/header.php";  ?>
+<!-- Navigation -->
+<?php include "includes/header.php";  ?>
+
 
         <div id="page-wrapper" style="transform: translateY(-50px);">
 
@@ -50,14 +52,20 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                           Welcome Admin
+                        <div style="height: 20px"></div>
+                         <div>
+                            <h1 class="page-header" > 
+                             Welcome Admin
 
                            <?php
 
                            ?>
                             <small><?php echo $_SESSION['username'];  ?></small>
                         </h1>
+                      
+                        
+                         </div>
+                           
                                      
 <div class="row">
     <div class="col-lg-3 col-md-6">
@@ -224,8 +232,8 @@
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <div class="row">
-     <div class="col-sm-7">
-     <div id="columnchart_material" style="width:auto; height: 450px;">
+     <div class="col-sm-8">
+     <div id="columnchart_material" style="width:auto; height: 350px;">
      <div class="row">
     <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
@@ -236,8 +244,8 @@
           ['Data', 'Count'],
           <?php
 
-    $element_text   = ['Active Projects' ,'Draft Projects' ,'Published Projects','Comments' , 'Approved comments','pending','employees', 'Staff', 'Categories'];
-    $element_count   = [$total_posts  , $total_draft_posts, $total_published_posts ,$total_comments, $total_approved_comments, $total_unapproved_comments,  $total_users, $total_subscribers ,$total_categories ];
+    $element_text   = [' Projects' ,'Drafts' ,'Published', 'Comments' , 'Approved comments','pending','employees', 'Categories'];
+    $element_count   = [$total_posts  , $total_draft_posts, $total_published_posts ,$total_comments, $total_approved_comments, $total_unapproved_comments,  $total_users,$total_categories ];
 
 
 
@@ -268,7 +276,7 @@
 
   </div>
         </div>
-         <div class="col-sm-5">
+         <div class="col-sm-4">
               <div id="donutchart" style="width:auto; height: 450px;">
      <div class="row">
     <script type="text/javascript">
@@ -276,13 +284,21 @@
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Uncompleted projects', 'Hours per Day'],
-          ['Completed projects',     11],
-          ['Categories',      2],
-          ['Comments',  2],
-          ['Employees', 2],
-          ['Unfinished Project',    7],
-          ['Total projects', 2]
+            ['Data', 'Count'],
+            <?php
+
+    $element_texts   = ['Total projects' ,'Uncompleted projects' ,'Completed projects','Comments','employees', 'Categories'];
+    $element_counts  = [$total_posts  ,  $total_draft_posts, $total_published_posts ,$total_comments,  $total_users ,$total_categories ];
+ 
+
+
+           for($i = 0; $i < 6;  $i++){
+            echo "['{$element_texts[$i]}'" . "," . "{$element_counts[$i]}],";
+
+           }
+
+
+?>
         ]);
 
          
@@ -290,7 +306,7 @@
 
         var options = {
           title: 'Project statistics',
-          pieHole: 0.4,
+          pieHole: 0.3,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
@@ -312,13 +328,56 @@
     </div>
     <!-- /#wrapper -->
 
+          
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+   <!--  <script src="js/script.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-</body>
+    
+<script type="text/javascript">
 
-</html>
- 
+$(document).ready(function(){
+  $('#selectAllBoxes').click(function(event){
+    if (this.checked) {
+        $('.checkBoxes').each(function(){
+            this.checked = true;
+        });
+    } else{
+         $('.checkBoxes').each(function(){
+            this.checked = false;
+        });
+    }
+
+  });
+});
+
+
+var div_box = "<div id='load-screen'><div id = 'loading'></div></div>";
+$("body").prepend(div_box);
+
+$('#load-screen').delay(700).fadeOut(600 ,function(){
+    $(this).remove();
+});
+
+
+function loadUsersOnline(){
+    $.get("functions.php?onlineusers=result" , function(data){
+      $(".usersOnline").text(data);
+    });
+
+}
+
+setInterval(function(){
+    loadUsersOnline()
+}, 500)
+
+loadUsersOnline();
+
+
+
+
+
+</script>

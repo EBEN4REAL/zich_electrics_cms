@@ -1,6 +1,4 @@
--<?php include "../includes/db.php";  ?>
-
-
+<?php include "../includes/db.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,10 +28,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-   
- <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
- 
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 
 <body>
@@ -43,17 +38,17 @@
         <!-- Navigation -->
         <?php include "includes/header.php";  ?>
 
-        <div id="page-wrapper" style="transform: translateY(-50px);">
+        <div id="page-wrapper">
 
             <div class="container-fluid">
 
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                       <!--  <h1 class="page-header">
+                        <h3 class="page-header">
                            Welcome Admin
-                            <small>Author</small>
-                        </h1> -->
+                            <small><?php echo $_SESSION['username'];  ?></small>
+                        </h3>
 
                         <?php
 
@@ -65,18 +60,18 @@
                             $source = '';
                         }
                         switch ($source) {
-                            case 'add_user':
+                            case 'add_post':
                                 # code...
-                            include 'includes/add_user.php';
+                            include 'includes/add_post.php';
                                 break;
-                            case 'edit_user':
+                            case 'edit_post':
                                 # code...
-                            include 'includes/edit_user.php';
+                            include 'includes/edit_post.php';
                                 break;
                             
                             default:
                                 # code...
-                              include 'includes/view_all_users.php';
+                              include 'includes/view_all_comments.php';
                                 break;
                         }
 
@@ -98,50 +93,12 @@
     </div>
     <!-- /#wrapper -->
 
-   <!-- jQuery -->
+    <!-- jQuery -->
     <script src="js/jquery.js"></script>
-   <!--  <script src="js/script.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-    
-<script type="text/javascript">
+</body>
 
-$(document).ready(function(){
-  $('#selectAllBoxes').click(function(event){
-    if (this.checked) {
-        $('.checkBoxes').each(function(){
-            this.checked = true;
-        });
-    } else{
-         $('.checkBoxes').each(function(){
-            this.checked = false;
-        });
-    }
-
-  });
-});
-
-
-var div_box = "<div id='load-screen'><div id = 'loading'></div></div>";
-$("body").prepend(div_box);
-
-$('#load-screen').delay(900).fadeOut(100 ,function(){
-    $(this).remove();
-});
- 
- function loadUsersOnline(){
-    $.get("functions.php?onlineusers=result" , function(data){
-      $(".usersOnline").text(data);
-    });
-
-}
-
-setInterval(function(){
-    loadUsersOnline()
-}, 500)
-
-loadUsersOnline();
-
-</script>
+</html>

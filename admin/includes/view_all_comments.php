@@ -21,33 +21,33 @@
                             <?php
                             //section that deletes comments from thwe database
                             if (isset($_GET['del_comment'])) {
-                            	# code...
-                            	$del_comment = $_GET['del_comment'];
-                            	$query = "DELETE FROM comments WHERE comment_id = '$del_comment'";
-                            	$unapprove_comment_query=  mysqli_query($connection , $query);
+                                # code...
+                                $del_comment = $_GET['del_comment'];
+                                $query = "DELETE FROM comments WHERE comment_id = '$del_comment'";
+                                $unapprove_comment_query=  mysqli_query($connection , $query);
 
 
                             }
                             //section to Unaprove
                             if (isset($_GET['unapprove'])) {
-                            	 # code...
-                            	$the_comment_id = $_GET['unapprove'];
-                            	$unapprove_comment = "UPDATE comments SET comment_status = 'Unapproved' WHERE comment_id = '$the_comment_id'";
-                            	$sql_query = mysqli_query($connection , $unapprove_comment);
+                                 # code...
+                                $the_comment_id = $_GET['unapprove'];
+                                $unapprove_comment = "UPDATE comments SET comment_status = 'Unapproved' WHERE comment_id = '$the_comment_id'";
+                                $sql_query = mysqli_query($connection , $unapprove_comment);
                             
-                            	
+                                
                             }
 
 
 
                             //section to Approve comments
                             if (isset($_GET['approve'])) {
-                            	 # code...
-                            	$the_comment_id = $_GET['approve'];
-                            	$approve_comment = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = '$the_comment_id'";
-                            	$sql_query = mysqli_query($connection , $approve_comment );
+                                 # code...
+                                $the_comment_id = $_GET['approve'];
+                                $approve_comment = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = '$the_comment_id'";
+                                $sql_query = mysqli_query($connection , $approve_comment );
                             
-                            	
+                                
                             }
                           //section that fetches comments from the database
                             $fetch_comments = "SELECT * FROM comments";
@@ -74,12 +74,12 @@
                                 $query = "SELECT * FROM posts WHERE post_id = '$comment_post_id'";
                                 $select_post_id_query = mysqli_query($connection , $query);
                                 while ($row = mysqli_fetch_assoc($select_post_id_query)) {
-                                	# code...
-                                	$post_id = $row['post_id'];
-                                	$post_title = $row['post_title'];
+                                    # code...
+                                    $post_id = $row['post_id'];
+                                    $post_title = $row['post_title'];
 
 
-                                	echo '<td><a href="../post.php?post_id='.$post_id.'">'.$post_title.'</a></td>';
+                                    echo '<td><a href="../post.php?post_id='.$post_id.'">'.$post_title.'</a></td>';
                                 }
 
 

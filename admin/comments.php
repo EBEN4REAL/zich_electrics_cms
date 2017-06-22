@@ -45,10 +45,10 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h3 class="page-header">
+                        <h1 class="page-header">
                            Welcome Admin
-                            <small><?php echo $_SESSION['username'];  ?></small>
-                        </h3>
+                            <small>Author</small>
+                        </h1>
 
                         <?php
 
@@ -98,6 +98,21 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function loadUsersOnline(){
+    $.get("functions.php?onlineusers=result" , function(data){
+      $(".usersOnline").text(data);
+    });
+
+}
+
+setInterval(function(){
+    loadUsersOnline()
+}, 500)
+
+loadUsersOnline();
+
+    </script>
 
 </body>
 

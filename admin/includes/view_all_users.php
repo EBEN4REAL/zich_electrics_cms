@@ -6,6 +6,7 @@
                            ?>
                             <small></small>
                         </h1>
+                        <a href="users.php?source=add_user" class="btn btn-primary" style="border-radius: 0px; margin: 10px"><span class="glyphicon glyphicon-plus"></span> Add User</a>
                         <table class="table table-striped table-hover table-bordered">
                             <thead>
                                 <tr>
@@ -30,7 +31,7 @@
                             <?php
                             //section that selects users from the database
 
-                            $fetch_users = "SELECT * FROM users";
+                            $fetch_users = "SELECT * FROM users ORDER BY user_id DESC";
                             $sql_query = mysqli_query($connection , $fetch_users);
                             while ($rows  = mysqli_fetch_assoc($sql_query)) {
                                 # code...
@@ -48,7 +49,7 @@
                                 
                                 echo "<tr>";
                                 echo "<td>{$user_id}</td>";
-                                echo "<td><img src='images/$user_image' width='100%'></td>";
+                                echo '<td><a href = "user_finance.php?user_id='.$user_id.'"><img src="images/'.$user_image.'"  width="100%"></a></td>';
                                 echo "<td> $username</td>";
                                 echo "<td>$user_firstname</td>";
                                 echo "<td>$user_lastname</td>";

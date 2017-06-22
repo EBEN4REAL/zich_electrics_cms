@@ -23,6 +23,7 @@ if (isset($_POST['login'])) {
 		 $db_username = $rows['username'];
 		 $db_user_password = $rows['user_password'];
 		 
+		 
 	}
 
 	$password = crypt($password  , $db_user_password);
@@ -42,6 +43,7 @@ if (isset($_POST['login'])) {
 		 	$_SESSION['firstname'] = $db_user_firstname;
 		 	$_SESSION['lastname'] =  $db_user_lastname;
 		 	$_SESSION['user_role'] = $db_user_role;
+		 	// $_SESSION['user_id'] = mysql_insert_id() + 1;
 
 		 }else{
 		 	header("Location: ../index.php");

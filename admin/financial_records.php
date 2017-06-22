@@ -1,4 +1,4 @@
--<?php include "../includes/db.php";  ?>
+<?php include "../includes/db.php";  ?>
 
 
 
@@ -33,7 +33,7 @@
    
  <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
  
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ 
 </head>
 
 <body>
@@ -50,11 +50,14 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                       <!--  <h1 class="page-header">
+                        <h3 class="page-header">
                            Welcome Admin
-                            <small>Author</small>
-                        </h1> -->
+                            <small><?php echo $_SESSION['username'];  ?></small>
+                        </h3>
+                        <h1 class="text-center">Financial Analysis</h1>
+                        <hr class="page-heading">
 
+ 
                         <?php
 
                         if (isset($_GET['source'])) {
@@ -65,18 +68,18 @@
                             $source = '';
                         }
                         switch ($source) {
-                            case 'add_user':
+                            case 'add_financial_record':
                                 # code...
-                            include 'includes/add_user.php';
+                            include 'includes/add_financial_record.php';
                                 break;
-                            case 'edit_user':
+                            case 'edit_financial_record':
                                 # code...
-                            include 'includes/edit_user.php';
+                            include 'includes/edit_financial_record.php';
                                 break;
                             
                             default:
                                 # code...
-                              include 'includes/view_all_users.php';
+                              include 'includes/view_all_financial_record.php';
                                 break;
                         }
 
@@ -98,40 +101,13 @@
     </div>
     <!-- /#wrapper -->
 
-   <!-- jQuery -->
+    <!-- jQuery -->
     <script src="js/jquery.js"></script>
-   <!--  <script src="js/script.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
-    
-<script type="text/javascript">
-
-$(document).ready(function(){
-  $('#selectAllBoxes').click(function(event){
-    if (this.checked) {
-        $('.checkBoxes').each(function(){
-            this.checked = true;
-        });
-    } else{
-         $('.checkBoxes').each(function(){
-            this.checked = false;
-        });
-    }
-
-  });
-});
-
-
-var div_box = "<div id='load-screen'><div id = 'loading'></div></div>";
-$("body").prepend(div_box);
-
-$('#load-screen').delay(900).fadeOut(100 ,function(){
-    $(this).remove();
-});
- 
- function loadUsersOnline(){
+    <script type="text/javascript">
+        function loadUsersOnline(){
     $.get("functions.php?onlineusers=result" , function(data){
       $(".usersOnline").text(data);
     });
@@ -144,4 +120,8 @@ setInterval(function(){
 
 loadUsersOnline();
 
-</script>
+    </script>
+
+</body>
+
+</html>

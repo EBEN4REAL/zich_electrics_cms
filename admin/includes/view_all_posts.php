@@ -19,13 +19,38 @@ foreach ($_POST['checkBoxArray'] as $checkBoxValue ) {
        $sql_query = mysqli_query($connection , $query);
          break;
       
-         break;
+
 
     case 'delete':
          # code...
       $query = "DELETE FROM posts WHERE post_id = '$checkBoxValue'";
       $sql_query = mysqli_query($connection , $query);
          break;
+
+    case 'clone':
+         # code...
+      $query = "SELECT * FROM   posts WHERE post_id = '$checkBoxValue'";
+      $sql_query = mysqli_query($connection , $query);
+        while ($rows  = mysqli_fetch_assoc($sql_query)) {
+        # code...
+        $post_id = $rows['post_id'];
+        $post_title = $rows['post_title'];
+        $post_author = $rows['post_author'];
+        $post_image = $rows['post_image'];
+        $post_content = $rows['post_content'];
+        $post_status = $rows['post_status'];
+        $post_date = $rows['post_date'];
+        $post_tags = $rows['post_tags'];
+        $post_category_id = $rows['post_category_id'];
+        $post_comment_count = $rows['post_comment_count'];
+
+        }
+
+     $query  =  "INSERT INTO posts (post_category_id, post_title , post_author, post_date, post_content,post_tags,post_status,post_image) VALUES ('$post_category_id','$post_title','$post_author',now(),'$post_content','$post_tags','$post_status','$post_image')" ;
+    $run_query = mysqli_query($connection , $query);
+         break;
+
+
      
      default:
          # code...
@@ -53,6 +78,7 @@ foreach ($_POST['checkBoxArray'] as $checkBoxValue ) {
      <option value="published">Publish</option>
      <option value="draft">Draft</option>
      <option value="delete">Delete</option>
+     <option value="clone">Clone</option>
 
  </select>
 
@@ -75,6 +101,7 @@ foreach ($_POST['checkBoxArray'] as $checkBoxValue ) {
     <th>Date</th>
     <th>Category</th>
     <th>View</th>
+    <th>Views</th>
     <th>Edit</th>
     <th>Trash</th>
    
@@ -97,6 +124,7 @@ $post_date = $rows['post_date'];
 $post_tags = $rows['post_tags'];
 $post_category_id = $rows['post_category_id'];
 $post_comment_count = $rows['post_comment_count'];
+$post_view_count = $rows['post_view_count'];
 
 
 echo "<tr>";
@@ -126,6 +154,8 @@ $post_category_id =  $row['post_category_id'];
 echo "<td> $post_category_id</td>";
 }
 echo ' <td><a href="../post.php?source=edit_post&post_id='.$post_id.'" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View Post</a></td>';
+echo '<td><a href="posts.php?reset='.$rows['post_id'].'">'.$post_view_count.'</a></td>';
+
 
 echo ' <td><a href="posts.php?source=edit_post&post_id='.$post_id.'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>';
 echo ' <td><a  onClick = "javascript: return confirm(\'Are you sure you want to delete\');" href="posts.php?del_id='.$rows['post_id'].'" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> Delete</a></td>';
@@ -142,11 +172,22 @@ echo ' <td><a  onClick = "javascript: return confirm(\'Are you sure you want to 
 
 <?php
 
+// section that deletes post/projects from the table
 if (isset($_GET['del_id'])) {
 # code...
 $delete = $_GET['del_id'];
 $delete_post = "DELETE FROM posts WHERE post_id = '$delete'";
 $sql_query = mysqli_query($connection , $delete_post);
+header("Location: posts.php");
+
+}
+
+//section that resets views counts from the table
+if (isset($_GET['reset'])) {
+# code...
+$reset = $_GET['reset'];
+$reset_views = "UPDATE posts SET post_view_count = 0 WHERE post_id =".mysqli_real_escape_string($connection , $_GET['reset'])."";
+$sql_query = mysqli_query($connection , $reset_views);
 header("Location: posts.php");
 
 }

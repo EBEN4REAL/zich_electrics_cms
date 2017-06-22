@@ -1,4 +1,5 @@
 <?php ob_start();  ?>
+<?php include("functions.php");  ?>
 <?php 
 session_start();
 
@@ -10,12 +11,20 @@ if (!isset($_SESSION['user_role'])) {
 
 
 }
+//section that fetches user profile pictures from the database
+$sql = "SELECT * FROM users WHERE username = '$_SESSION[username]'";
+$run_query = mysqli_query($connection , $sql);
+while ($row = mysqli_fetch_assoc($run_query)) {
+    # code...
+      $profile_pics = $row['user_image'];
+}
 
 ?>
 
 
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/loader.css">
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 
 <style type="text/css">
@@ -25,8 +34,11 @@ if (!isset($_SESSION['user_role'])) {
     input[type = "text"] , input[type = "email"] , input[type = "submit"] , input[type = "password"]  {
         border-radius: 0;
     }
+    #img {
+        border-radius: 50%;
+    }
 </style>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="border-bottom: none;  ">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="border-bottom: none; height: 50px ">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -40,42 +52,12 @@ if (!isset($_SESSION['user_role'])) {
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
              <li ><a href="../index.php" class='glyphicon glyphicon-home'></a></li>
+              <li ><a href="" class=''>Users Online: <span class="usersOnline"></span></a></li>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown">
-                       <!--  <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-he ing">
-                                            <strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
- -->
-                       <!--  <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading">
-                                            <strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li> -->
+                       
                         <li class="message-preview">
                             <a href="#">
                                 <div class="media">
@@ -83,37 +65,38 @@ if (!isset($_SESSION['user_role'])) {
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading">
+                                       <!--  <h5 class="media-heading">
                                             <strong>John Smith</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p> -->
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li class="message-footer">
+                        <!-- <li class="message-footer">
                             <a href="#">Read All New Messages</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu alert-dropdown">
-                        <li>
+                        <!-- <li>
                             <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
                         </li>
+                         -->
                         
-                        
-                        <li class="divider"></li>
-                        <li>
+                        <!-- <li class="divider"></li> -->
+                        <!-- <li>
                             <a href="#">View All</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>&nbsp;
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo  '<img src="images/'.$profile_pics.'" width="40px" id="img" style="margin-top: -9px">';  ?>
+                     &nbsp;
 
                     <?php
                     if (isset($_SESSION['username'])) {
@@ -165,12 +148,25 @@ if (!isset($_SESSION['user_role'])) {
                     <li>
                         <a href="categories.php"><i class="fa fa-fw fa-desktop"></i> Categories</a>
                     </li>
+                    
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-arrows-v"></i> Financial records <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo1" class="collapse">
+                            <li>
+                                <a href="financial_records.php?source=view_all_financial_records">View Financial records</a>
+                            </li>
+                             <li>
+                                <a href="financial_records.php?source=add_financial_record">Add Financial record</a>
+                            </li>
+                            
+                        </ul>
+                    </li>
                     <li>
                         <a href="comments.php"><i class="fa fa-fw fa-wrench"></i> Comments</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-arrows-v"></i> Employees <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo1" class="collapse">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-arrows-v"></i> Employees <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo2" class="collapse">
                             <li>
                                 <a href="users.php?source=view_all_users">View all employees</a>
                             </li>
